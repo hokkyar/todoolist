@@ -1,0 +1,26 @@
+#todos li {
+    padding: 10px;
+    cursor: pointer;
+    transition: .3s;
+    position: relative;
+}
+
+#todos li:hover {
+    background-color: #eee;
+}
+
+.done {
+    text-decoration: line-through;
+}
+
+.trash {
+    margin-right: 10px;
+    margin-top: -2px;
+    position: absolute;
+    right: 0;
+    transition: .3s;
+}
+
+.trash:hover {
+    color: red;
+}
