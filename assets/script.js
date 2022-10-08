@@ -1,21 +1,35 @@
-let todos = localStorage.getItem(STORAGE_KEY).split(',') || []
+let todos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []
 
 window.onload = () => {
     if (checkStorage) {
-        console.log(todos)
         loadContent()
     }
 }
 
 $('#input-search').on('keyup', (e) => {
     if (e.key === "Enter" && e.target.value !== '') {
-        addTodo(e.target.value)
+        addTodo({
+            name: e.target.value,
+            isDone: false
+        })
         e.target.value = ''
     }
 })
 
 function done(e) {
     e.classList.toggle('done')
+    const name = e.firstChild.textContent
+    todos.map((todo) => {
+        if (todo.name == name) {
+            if (e.classList.contains('done')) {
+                todo.isDone = true
+            } else {
+                todo.isDone = false
+            }
+        }
+    })
+    console.log(todos)
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
 }
 
 function removeItem(e) {
@@ -24,15 +38,15 @@ function removeItem(e) {
     e.parentElement.remove()
 }
 
-function removeTodo(todo) {
-    const newTodos = todos.filter((t) => t !== todo)
-    todos = newTodos
-    localStorage.setItem(STORAGE_KEY, newTodos)
+function removeTodo(name) {
+    const filteredTodo = todos.filter((todo) => todo.name !== name)
+    todos = filteredTodo
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(filteredTodo))
 }
 
 function addContent(todo) {
     $('#todos').append(`
-        <li class="todo-item" onclick="done(this)"><span>${todo}</span>
+        <li class="todo-item ${todo.isDone ? 'done' : ''}" onclick="done(this)"><span>${todo.name}</span>
             <i class="trash" onclick="removeItem(this)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-trash-fill" viewBox="0 0 16 16">
@@ -46,15 +60,15 @@ function addContent(todo) {
 
 function addTodo(todo) {
     todos.push(todo)
-    if (todos[0] == '') {
-        todos = todos.filter((t) => t !== '')
-    }
+    // if (todos[0] == '') {
+    //     todos = todos.filter((t) => t !== '')
+    // }
     addContent(todo)
-    localStorage.setItem(STORAGE_KEY, todos)
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
 }
 
 function loadContent() {
-    if (localStorage.getItem(STORAGE_KEY).length === 0) {
+    if (todos.length === 0) {
         return;
     }
     todos.map((todo) => {
