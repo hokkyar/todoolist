@@ -16,6 +16,14 @@ $('#input-search').on('keyup', (e) => {
     }
 })
 
+$('#addButton').on('click', () => {
+    addTodo({
+        name: $('#input-search').val(),
+        isDone: false
+    })
+    $('#input-search').val('')
+})
+
 function done(e) {
     e.classList.toggle('done')
     const name = e.firstChild.textContent
@@ -46,7 +54,7 @@ function removeTodo(name) {
 
 function addContent(todo) {
     $('#todos').append(`
-        <li class="todo-item ${todo.isDone ? 'done' : ''}" onclick="done(this)"><span>${todo.name}</span>
+        <li class="list-group-item todo-item ${todo.isDone ? 'done' : ''}" onclick="done(this)"><span>${todo.name}</span>
             <i class="trash" onclick="removeItem(this)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-trash-fill" viewBox="0 0 16 16">
@@ -60,9 +68,6 @@ function addContent(todo) {
 
 function addTodo(todo) {
     todos.push(todo)
-    // if (todos[0] == '') {
-    //     todos = todos.filter((t) => t !== '')
-    // }
     addContent(todo)
     localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
 }

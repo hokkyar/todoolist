@@ -1,3 +1,7 @@
+body {
+    background-color: #EEEEEE;
+}
+
 #todos li {
     padding: 10px;
     cursor: pointer;
@@ -23,4 +27,48 @@
 
 .trash:hover {
     color: red;
+}
+
+.bg-todo {
+    background-color: #6F38C5;
+}
+
+.text-todo {
+    color: #EEEEEE;
+}
+
+.todo-logo {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.todoimg-wrapper,
+.todomain-wrapper {
+    border-radius: 7px;
+}
+
+.todoimg-wrapper {
+    margin-right: 5px;
+    /* border: 1px solid #FFCACA; */
+    /* box-shadow: 3px 3px 3px 3px black; */
+}
+
+.todomain-wrapper {
+    border: 1px solid #87A2FB;
+    transition: .3s;
+    background-color: white;
+}
+
+.todomain-wrapper:hover {
+    box-shadow: 2px 2px 3px #6F38C5;
+}
+
+#addButton {
+    cursor: pointer;
+}
+
+.form-control:enabled {
+    box-shadow: none;
+    /* border: 1px solid #372948; */
 }
